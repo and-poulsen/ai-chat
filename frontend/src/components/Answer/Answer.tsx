@@ -3,6 +3,8 @@ import { useBoolean } from "@fluentui/react-hooks"
 import { FontIcon, Stack, Text } from "@fluentui/react";
 
 import styles from "./Answer.module.css";
+import chatStyles from "../../pages/chat/Chat.module.css";
+import LunarGPTProfilePicture from "../../assets/LunarGPTProfilePicture.svg";
 
 import { AskResponse, Citation } from "../../api";
 import { parseAnswer } from "./AnswerParser";
@@ -58,7 +60,11 @@ export const Answer = ({
 
     return (
         <>
-            <Stack className={styles.answerContainer} tabIndex={0}>
+            <div className={chatStyles.messageProfilePhoto}>
+                <img src={LunarGPTProfilePicture} alt="Lunar GPT Profile" />
+            </div>
+            <Stack className={styles.answerContainer + " " + chatStyles.message} tabIndex={0}>
+                <div className={chatStyles.chatMessageAuthor}>LunarGPT</div>
                 <Stack.Item grow>
                     <ReactMarkdown
                         linkTarget="_blank"

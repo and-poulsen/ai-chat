@@ -9,7 +9,8 @@ import uuid from 'react-uuid';
 import { isEmpty } from "lodash-es";
 
 import styles from "./Chat.module.css";
-import Azure from "../../assets/Azure.svg";
+import LunarGPTLogoSimple from "../../assets/LunarGPTLogoSimple.svg";
+import UserPng from "../../assets/user.png";
 
 import {
     ChatMessage,
@@ -586,23 +587,29 @@ const Chat = () => {
                         {!messages || messages.length < 1 ? (
                             <Stack className={styles.chatEmptyState}>
                                 <img
-                                    src={Azure}
+                                    src={LunarGPTLogoSimple}
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
-                                <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>This chatbot is configured to answer your questions</h2>
+                                <h1 className={styles.chatEmptyStateTitle}>How can I help you today?</h1>
+                                {/* <h2 className={styles.chatEmptyStateSubtitle}>This chatbot is configured to answer your questions</h2> */}
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
                                 {messages.map((answer, index) => (
                                     <>
                                         {answer.role === "user" ? (
-                                            <div className={styles.chatMessageUser} tabIndex={0}>
-                                                <div className={styles.chatMessageUserMessage}>{answer.content}</div>
+                                            <div className={styles.chatMessage + " " + styles.chatMessageUser} tabIndex={0}>
+                                                <div className={styles.messageProfilePhoto}>
+                                                    <img src={UserPng} />
+                                                </div>
+                                                <div className={styles.message}>
+                                                    <div className={styles.chatMessageAuthor}>You</div>
+                                                    <div className={styles.chatMessageUserMessage}>{answer.content}</div>
+                                                </div>
                                             </div>
                                         ) : (
-                                            answer.role === "assistant" ? <div className={styles.chatMessageGpt}>
+                                            answer.role === "assistant" ? <div className={styles.chatMessage + " " + styles.chatMessageGpt}>
                                                 <Answer
                                                     answer={{
                                                         answer: answer.content,
@@ -673,7 +680,7 @@ const Chat = () => {
                                     disabled={disabledButton()}
                                     aria-label="start a new chat button"
                                 />}
-                                <CommandBarButton
+                                {/* <CommandBarButton
                                     role="button"
                                     styles={{ 
                                         icon: { 
@@ -690,7 +697,7 @@ const Chat = () => {
                                     onClick={appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured ? clearChat : newChat}
                                     disabled={disabledButton()}
                                     aria-label="clear chat button"
-                                />
+                                /> */}
                                 <Dialog
                                     hidden={hideErrorDialog}
                                     onDismiss={handleErrorDialogClose}
@@ -701,7 +708,7 @@ const Chat = () => {
                             </Stack>
                             <QuestionInput
                                 clearOnSend
-                                placeholder="Type a new question..."
+                                placeholder="Message LunarGPT..."
                                 disabled={isLoading}
                                 onSend={(question, id) => {
                                     appStateContext?.state.isCosmosDBAvailable?.cosmosDB ? makeApiRequestWithCosmosDB(question, id) : makeApiRequestWithoutCosmosDB(question, id)

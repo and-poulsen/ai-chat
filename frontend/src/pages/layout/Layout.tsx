@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import styles from "./Layout.module.css";
-import Azure from "../../assets/Azure.svg";
+import LunarGPTLogo from "../../assets/LunarGPTLogo.svg";
 import { CopyRegular, ShareRegular } from "@fluentui/react-icons";
 import { CommandBarButton, Dialog, Stack, TextField, ICommandBarStyles, IButtonStyles, DefaultButton  } from "@fluentui/react";
 import { useContext, useEffect, useState } from "react";
@@ -73,20 +73,19 @@ const Layout = () => {
                 // className={styles.headerContainer}
                 >
                     <Stack horizontal verticalAlign="center">
+                        <Link to="/" className={styles.headerTitleContainer}>
                         <img
-                            src={Azure}
+                            src={LunarGPTLogo}
                             className={styles.headerIcon}
                             aria-hidden="true"
                         />
-                        <Link to="/" className={styles.headerTitleContainer}>
-                            <h1 className={styles.headerTitle}>Azure AI</h1>
                         </Link>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 4 }}>
                             {(appStateContext?.state.isCosmosDBAvailable?.status !== CosmosDBStatus.NotConfigured) && 
                                 <HistoryButton onClick={handleHistoryClick} text={appStateContext?.state?.isChatHistoryOpen ? "Hide chat history" : "Show chat history"}/>    
                             }
-                            <ShareButton onClick={handleShareClick} />
+                            {/* <ShareButton onClick={handleShareClick} /> */}
                     </Stack>
 
                 </Stack>
